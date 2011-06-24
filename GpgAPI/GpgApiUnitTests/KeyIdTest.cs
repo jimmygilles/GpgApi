@@ -22,6 +22,7 @@ namespace GpgApiUnitTests
             Assert.IsFalse(KeyId.IsValid(null));
             Assert.IsFalse(KeyId.IsValid(String.Empty));
             Assert.IsFalse(KeyId.IsValid("unit test"));
+            Assert.IsFalse(KeyId.IsValid("子子子子子子子子子子子子子子子子"));
             Assert.IsTrue(KeyId.IsValid("0123456789ABCDEF"));
         }
 

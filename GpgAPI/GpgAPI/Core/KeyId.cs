@@ -19,6 +19,7 @@
 #endregion License
 
 using System;
+using System.Text.RegularExpressions;
 
 namespace GpgApi
 {
@@ -28,6 +29,8 @@ namespace GpgApi
     /// </summary>
     public sealed class KeyId : IEquatable<KeyId>
     {
+        private static readonly Regex _regex = new Regex(@"^[A-Za-z0-9]+$", RegexOptions.Compiled);
+
         /// <summary>
         /// Determines whether a key id is valid or not.
         /// </summary>
@@ -35,14 +38,7 @@ namespace GpgApi
         /// <returns>true if the key id is valid; otherwise false.</returns>
         public static Boolean IsValid(String keyId)
         {
-            if (keyId == null || keyId.Length != 16)
-                return false;
-
-            foreach (Char c in keyId)
-                if (!Char.IsLetterOrDigit(c))
-                    return false;
-
-            return true;
+            return keyId != null && keyId.Length == 16 && _regex.IsMatch(keyId);
         }
 
         private readonly String _keyId;

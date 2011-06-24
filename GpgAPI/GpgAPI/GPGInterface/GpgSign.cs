@@ -101,7 +101,7 @@ namespace GpgApi
 
                 case GpgKeyword.GET_HIDDEN:
                 {
-                    if (line == "passphrase.enter")
+                    if (String.Equals(line, "passphrase.enter", StringComparison.Ordinal))
                     {
                         String password = InternalAskPassphrase(SignatureKeyId);
                         if (String.IsNullOrEmpty(password))
@@ -122,7 +122,7 @@ namespace GpgApi
 
                 case GpgKeyword.GET_BOOL:
                 {
-                    if (line == "openfile.overwrite.okay")
+                    if (String.Equals(line, "openfile.overwrite.okay", StringComparison.Ordinal))
                         WriteLine("YES");
                     break;
                 }

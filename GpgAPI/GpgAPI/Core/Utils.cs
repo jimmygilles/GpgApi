@@ -136,14 +136,14 @@ namespace GpgApi
 
             // ----------------------------------
 
-            if (userInfo.EndsWith(">"))
+            if (userInfo.EndsWith(">", StringComparison.Ordinal))
             {
                 Int32 pos = userInfo.LastIndexOf('<');
                 tmp_email = userInfo.Substring(pos + 1, userInfo.Length - pos - 2);
                 userInfo = userInfo.Substring(0, pos).Trim();
             }
 
-            if (userInfo.EndsWith(")"))
+            if (userInfo.EndsWith(")", StringComparison.Ordinal))
             {
                 Int32 pos = userInfo.LastIndexOf('(');
                 tmp_comment = userInfo.Substring(pos + 1, userInfo.Length - pos - 2);

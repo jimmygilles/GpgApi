@@ -62,14 +62,14 @@ namespace GpgApi
             {
                 case GpgKeyword.GET_LINE:
                 {
-                    if (line == "keygen.valid")
+                    if (String.Equals(line, "keygen.valid", StringComparison.Ordinal))
                         WriteLine(GpgConvert.ToDays(ExpirationDate));
                     break;
                 }
 
                 case GpgKeyword.GET_HIDDEN:
                 {
-                    if (line == "passphrase.enter")
+                    if (String.Equals(line, "passphrase.enter", StringComparison.Ordinal))
                     {
                         String password = InternalAskPassphrase(KeyId);
                         if (String.IsNullOrEmpty(password))
