@@ -61,14 +61,14 @@ namespace GpgApi
             {
                 case GpgKeyword.GET_LINE:
                 {
-                    if (line == "edit_ownertrust.value")
+                    if (String.Equals(line, "edit_ownertrust.value", StringComparison.Ordinal))
                         WriteLine(GpgConvert.ToId(OwnerTrust));
                     break;
                 }
 
                 case GpgKeyword.GET_BOOL:
                 {
-                    if (line.StartsWith("edit_ownertrust."))
+                    if (line.StartsWith("edit_ownertrust.", StringComparison.Ordinal))
                         WriteLine("YES");
                     break;
                 }

@@ -60,7 +60,7 @@ namespace GpgApi
             {
                 case GpgKeyword.GET_HIDDEN:
                 {
-                    if (line == "passphrase.enter")
+                    if (String.Equals(line, "passphrase.enter", StringComparison.Ordinal))
                     {
                         String password = InternalAskPassphrase(KeyId, _isNewPassword);
                         if (String.IsNullOrEmpty(password))

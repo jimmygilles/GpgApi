@@ -61,7 +61,7 @@ namespace GpgApi
             {
                 case GpgKeyword.GET_BOOL:
                 {
-                    if (line == "keyedit.remove.uid.okay")
+                    if (String.Equals(line, "keyedit.remove.uid.okay", StringComparison.Ordinal))
                         WriteLine("YES");
                     break;
                 }

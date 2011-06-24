@@ -163,7 +163,7 @@ namespace GpgApi
 
                 case GpgKeyword.GET_HIDDEN:
                 {
-                    if (line == "passphrase.enter")
+                    if (String.Equals(line, "passphrase.enter", StringComparison.Ordinal))
                     {
                         String password = InternalAskPassphrase(Name, true);
                         if (String.IsNullOrEmpty(password))

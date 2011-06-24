@@ -92,7 +92,7 @@ namespace GpgApi
             {
                 case GpgKeyword.GET_HIDDEN:
                 {
-                    if (line == "passphrase.enter")
+                    if (String.Equals(line, "passphrase.enter", StringComparison.Ordinal))
                     {
                         String password = InternalAskPassphrase(KeyId);
                         if (String.IsNullOrEmpty(password))
@@ -125,7 +125,7 @@ namespace GpgApi
 
                 case GpgKeyword.GET_BOOL:
                 {
-                    if (line == "photoid.jpeg.size")
+                    if (String.Equals(line, "photoid.jpeg.size", StringComparison.Ordinal))
                     {
                         if (_alreadyAsked2)
                             return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.InvalidImageFormat);

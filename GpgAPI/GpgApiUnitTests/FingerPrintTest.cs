@@ -22,6 +22,7 @@ namespace GpgApiUnitTests
             Assert.IsFalse(FingerPrint.IsValid(null));
             Assert.IsFalse(FingerPrint.IsValid(String.Empty));
             Assert.IsFalse(FingerPrint.IsValid("unit test"));
+            Assert.IsFalse(KeyId.IsValid("子子子子子子子子子子子子子子子子"));
             Assert.IsTrue(FingerPrint.IsValid("123465ABCDE"));
         }
 

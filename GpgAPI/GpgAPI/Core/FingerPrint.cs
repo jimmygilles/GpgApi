@@ -19,6 +19,7 @@
 #endregion License
 
 using System;
+using System.Text.RegularExpressions;
 
 namespace GpgApi
 {
@@ -28,6 +29,8 @@ namespace GpgApi
     /// </summary>
     public sealed class FingerPrint : IEquatable<FingerPrint>
     {
+        private static readonly Regex _regex = new Regex(@"^[A-Za-z0-9]+$", RegexOptions.Compiled);
+
         /// <summary>
         /// Determines whether a fingerprint is valid or not.
         /// </summary>
@@ -35,14 +38,7 @@ namespace GpgApi
         /// <returns>true if the fingerprint is valid; otherwise false.</returns>
         public static Boolean IsValid(String fingerPrint)
         {
-            if (String.IsNullOrEmpty(fingerPrint))
-                return false;
-
-            foreach (Char c in fingerPrint)
-                if (!Char.IsLetterOrDigit(c))
-                    return false;
-
-            return true;
+            return !String.IsNullOrEmpty(fingerPrint) && _regex.IsMatch(fingerPrint);
         }
 
         private readonly String _fingerPrint;

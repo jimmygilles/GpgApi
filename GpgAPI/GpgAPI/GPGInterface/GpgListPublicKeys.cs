@@ -145,7 +145,7 @@ namespace GpgApi
                 case "rev":
                 {
                     if (_lastKeyNode != null)
-                        _lastKeyNode.Signatures.Add(new KeySignature(parts[4], GpgConvert.ToDate(parts[5]), parts[0] == "rev"));
+                        _lastKeyNode.Signatures.Add(new KeySignature(parts[4], GpgConvert.ToDate(parts[5]), String.Equals(parts[0], "rev", StringComparison.Ordinal)));
                     break;
                 }
             }

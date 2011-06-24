@@ -61,7 +61,7 @@ namespace GpgApi
             {
                 case GpgKeyword.GET_HIDDEN:
                 {
-                    if (line == "passphrase.enter")
+                    if (String.Equals(line, "passphrase.enter", StringComparison.Ordinal))
                     {
                         String password = InternalAskPassphrase(KeyId);
                         if (String.IsNullOrEmpty(password))
@@ -81,7 +81,7 @@ namespace GpgApi
 
                 case GpgKeyword.GET_LINE:
                 {
-                    if (line == "keyedit.prompt")
+                    if (String.Equals(line, "keyedit.prompt", StringComparison.Ordinal))
                         WriteLine("save");
                     break;
                 }

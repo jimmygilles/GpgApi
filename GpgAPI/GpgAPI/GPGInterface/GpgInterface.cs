@@ -319,7 +319,7 @@ namespace GpgApi
         // internal AND protected
         internal Boolean GNUCheck(ref String line)
         {
-            if (line != null && line.StartsWith("[GNUPG:] "))
+            if (line != null && line.StartsWith("[GNUPG:] ", StringComparison.Ordinal))
             {
                 line = line.Substring(9);
                 return true;

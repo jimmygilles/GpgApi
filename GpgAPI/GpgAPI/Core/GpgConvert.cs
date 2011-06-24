@@ -85,33 +85,33 @@ namespace GpgApi
 
         public static KeyTrust ToTrust(Char c)
         {
-            c = Char.ToLower(c);
+            c = Char.ToUpperInvariant(c);
 
             switch (c)
             {
-                case 'o': return KeyTrust.Unknown;
-                case 'i': return KeyTrust.Invalid;
-                case 'r': return KeyTrust.Revoked;
-                case 'e': return KeyTrust.Expired;
-                case 'q': return KeyTrust.Undefined;
-                case 'n': return KeyTrust.None;
-                case 'm': return KeyTrust.Marginal;
-                case 'f': return KeyTrust.Full;
-                case 'u': return KeyTrust.Ultimate;
+                case 'O': return KeyTrust.Unknown;
+                case 'I': return KeyTrust.Invalid;
+                case 'R': return KeyTrust.Revoked;
+                case 'E': return KeyTrust.Expired;
+                case 'Q': return KeyTrust.Undefined;
+                case 'N': return KeyTrust.None;
+                case 'M': return KeyTrust.Marginal;
+                case 'F': return KeyTrust.Full;
+                case 'U': return KeyTrust.Ultimate;
                 default: return KeyTrust.Unknown;
             }
         }
 
         public static KeyOwnerTrust ToOwnerTrust(Char c)
         {
-            c = Char.ToLower(c);
+            c = Char.ToUpperInvariant(c);
 
             switch (c)
             {
-                case 'n': return KeyOwnerTrust.None;
-                case 'm': return KeyOwnerTrust.Marginal;
-                case 'u': return KeyOwnerTrust.Ultimate;
-                case 'f': return KeyOwnerTrust.Full;
+                case 'N': return KeyOwnerTrust.None;
+                case 'M': return KeyOwnerTrust.Marginal;
+                case 'U': return KeyOwnerTrust.Ultimate;
+                case 'F': return KeyOwnerTrust.Full;
                 default: return KeyOwnerTrust.None;
             }
         }
