@@ -76,11 +76,11 @@ namespace GpgApi
         /// <summary>
         /// Determines whether the specified <see cref="System.Object"/> equals the current <see cref="GpgApi.Email"/>.
         /// </summary>
-        /// <param name="other">The object to compare with the current <see cref="GpgApi.Email"/>.</param>
+        /// <param name="obj">The object to compare with the current <see cref="GpgApi.Email"/>.</param>
         /// <returns>true if the specified Object equals the current Email; otherwise false.</returns>
-        public override Boolean Equals(Object other)
+        public override Boolean Equals(Object obj)
         {
-            return Email.Equals(this, other as Email);
+            return Email.Equals(this, obj as Email);
         }
 
         /// <summary>

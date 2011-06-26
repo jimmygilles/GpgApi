@@ -37,13 +37,13 @@ namespace GpgApi
     ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.EndEncryption"/></term></item>
     ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.SignatureKeyExpired"/></term></item>
     ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.InvalidRecipient"/></term></item>
-    ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.InvalidFilename"/></term></item>
+    ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.InvalidFileName"/></term></item>
     /// </list>
     /// </remarks>
     public sealed class GpgEncrypt : GpgInterface
     {
-        public String Filename { get; private set; }
-        public String EncryptedFilename { get; private set; }
+        public String FileName { get; private set; }
+        public String EncryptedFileName { get; private set; }
         public Boolean Armored { get; private set; }
         public Boolean HideUserIds { get; private set; }
         public KeyId SignatureKeyId { get; private set; }
@@ -53,17 +53,17 @@ namespace GpgApi
         /// <summary>
         /// Initializes a new instance of the <see cref="GpgApi.GpgEncrypt"/> class.
         /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="encryptedFilename"></param>
+        /// <param name="fileName"></param>
+        /// <param name="encryptedFileName"></param>
         /// <param name="armored"></param>
         /// <param name="hideUserIds"></param>
         /// <param name="signatureKeyId"></param>
         /// <param name="recipients"></param>
         /// <param name="cipherAlgorithm"></param>
-        public GpgEncrypt(String filename, String encryptedFilename, Boolean armored, Boolean hideUserIds, KeyId signatureKeyId, IEnumerable<KeyId> recipients, CipherAlgorithm cipherAlgorithm)
+        public GpgEncrypt(String fileName, String encryptedFileName, Boolean armored, Boolean hideUserIds, KeyId signatureKeyId, IEnumerable<KeyId> recipients, CipherAlgorithm cipherAlgorithm)
         {
-            Filename = filename;
-            EncryptedFilename = encryptedFilename;
+            FileName = fileName;
+            EncryptedFileName = encryptedFileName;
             Armored = armored;
             HideUserIds = hideUserIds;
             SignatureKeyId = signatureKeyId;
@@ -78,7 +78,7 @@ namespace GpgApi
         {
             String args = "";
 
-            args += "--output " + Utils.EscapePath(EncryptedFilename) + " ";
+            args += "--output " + Utils.EscapePath(EncryptedFileName) + " ";
 
             if (Armored)
                 args += "--armor ";
@@ -111,7 +111,7 @@ namespace GpgApi
                 }
             }
 
-            args += Utils.EscapePath(Filename);
+            args += Utils.EscapePath(FileName);
 
             return args;
         }
@@ -119,11 +119,11 @@ namespace GpgApi
         // internal AND protected
         internal override GpgInterfaceResult BeforeStartProcess()
         {
-            if (!File.Exists(Filename))
-                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.FileNotFound, Filename);
+            if (!File.Exists(FileName))
+                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.FileNotFound, FileName);
 
-            if (!Utils.IsValidPath(EncryptedFilename))
-                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.InvalidFilename, EncryptedFilename);
+            if (!Utils.IsValidPath(EncryptedFileName))
+                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.InvalidFileName, EncryptedFileName);
 
             return GpgInterfaceResult.Success;
         }

@@ -19,6 +19,7 @@
 #endregion License
 
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace GpgApi
@@ -29,8 +30,8 @@ namespace GpgApi
     public sealed class GpgSign : GpgInterface
     {
         public KeyId SignatureKeyId { get; private set; }
-        public String Filename { get; private set; }
-        public String SignedFilename { get; private set; }
+        public String FileName { get; private set; }
+        public String SignedFileName { get; private set; }
         public Boolean Armored { get; private set; }
 
         public Boolean Signed { get; private set; }
@@ -41,18 +42,18 @@ namespace GpgApi
         /// 
         /// </summary>
         /// <param name="signatureKeyId"></param>
-        /// <param name="filename"></param>
-        /// <param name="signedFilename"></param>
+        /// <param name="fileName"></param>
+        /// <param name="signedFileName"></param>
         /// <param name="armored"></param>
         /// <exception cref="System.ArgumentNullException"/>
-        public GpgSign(KeyId signatureKeyId, String filename, String signedFilename, Boolean armored)
+        public GpgSign(KeyId signatureKeyId, String fileName, String signedFileName, Boolean armored)
         {
             if (signatureKeyId == null)
                 throw new ArgumentNullException("signatureKeyId");
 
             SignatureKeyId = signatureKeyId;
-            Filename = filename;
-            SignedFilename = signedFilename;
+            FileName = fileName;
+            SignedFileName = signedFileName;
             Armored = armored;
             Signed = false;
             KeyAlgorithm = KeyAlgorithm.None;
@@ -64,10 +65,10 @@ namespace GpgApi
         {
             String args = "";
 
-            args += "--output " + Utils.EscapePath(SignedFilename) + " ";
+            args += "--output " + Utils.EscapePath(SignedFileName) + " ";
             args += Armored ? "--clearsign " : "--sign ";
             args += "--local-user " + SignatureKeyId + " ";
-            args += Utils.EscapePath(Filename);
+            args += Utils.EscapePath(FileName);
 
             return args;
         }
@@ -75,11 +76,11 @@ namespace GpgApi
         // internal AND protected
         internal override GpgInterfaceResult BeforeStartProcess()
         {
-            if (!File.Exists(Filename))
-                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.FileNotFound, Filename);
+            if (!File.Exists(FileName))
+                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.FileNotFound, FileName);
 
-            if (!Utils.IsValidPath(SignedFilename))
-                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.InvalidFilename, SignedFilename);
+            if (!Utils.IsValidPath(SignedFileName))
+                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.InvalidFileName, SignedFileName);
 
             return GpgInterfaceResult.Success;
         }
@@ -115,8 +116,8 @@ namespace GpgApi
                 {
                     String[] parts = line.Split(' ');
                     Signed = true;
-                    KeyAlgorithm = GpgConvert.ToKeyAlgorithm(Int32.Parse(parts[1]));
-                    DigestAlgorithm = GpgConvert.ToDigestAlgorithm(Int32.Parse(parts[2]));
+                    KeyAlgorithm = GpgConvert.ToKeyAlgorithm(Int32.Parse(parts[1], CultureInfo.InvariantCulture));
+                    DigestAlgorithm = GpgConvert.ToDigestAlgorithm(Int32.Parse(parts[2], CultureInfo.InvariantCulture));
                     break;
                 }
 

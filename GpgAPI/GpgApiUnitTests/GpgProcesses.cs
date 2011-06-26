@@ -32,7 +32,7 @@ namespace GpgApiUnitTests
             Email email = new Email("unittest@unittest.com");
             String comment = "Unit Test Comment";
 
-            GpgGenerateKey generatekey = new GpgGenerateKey(name, email, comment, KeyAlgorithm.RSA_RSA, 1024, expiration_date);
+            GpgGenerateKey generatekey = new GpgGenerateKey(name, email, comment, KeyAlgorithm.RsaRsa, 1024, expiration_date);
             generatekey.AskPassphrase = TestCore.AskPassphrase;
             generatekey.Execute();
             Assert.IsNotNull(generatekey.FingerPrint);
@@ -61,7 +61,7 @@ namespace GpgApiUnitTests
             DateTime ed = key.ExpirationDate.DateTime;
             Boolean isInRange = ed > expiration_date && ed < expiration_date.AddDays(1);
 
-            Assert.AreEqual(KeyAlgorithm.RSA_RSA, key.Algorithm);
+            Assert.AreEqual(KeyAlgorithm.RsaRsa, key.Algorithm);
             Assert.AreEqual(true, isInRange);
             Assert.AreEqual(generatekey.FingerPrint, key.FingerPrint);
             Assert.IsFalse(key.IsDisabled);

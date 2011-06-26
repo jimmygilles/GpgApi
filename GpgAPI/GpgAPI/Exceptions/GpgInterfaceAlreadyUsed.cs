@@ -26,6 +26,7 @@ namespace GpgApi
     /// <summary>
     /// This exception is thrown when the method <see cref="GpgApi.GpgInterface.Execute"/> is called more than one time for an instance of <see cref="GpgApi.GpgInterface"/>.
     /// </summary>
+    [Serializable]
     public class GpgInterfaceAlreadyUsed : GpgApiException
     {
         /// <summary>

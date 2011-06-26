@@ -20,6 +20,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace GpgApi
 {
@@ -28,24 +30,40 @@ namespace GpgApi
     /// </summary>
     public sealed class GpgListSecretKeys : GpgInterface
     {
-        public IEnumerable<KeyId> Filters { get; private set; }
-        public List<Key> Keys { get; private set; }
+        public ReadOnlyCollection<KeyId> Filters { get; private set; }
+        public IList<Key> Keys { get; private set; }
+
+        public GpgListSecretKeys() : this(null)
+        {
+        }
 
         public GpgListSecretKeys(IEnumerable<KeyId> filters)
         {
             Keys = new List<Key>();
-            Filters = filters;
+
+            if (filters == null)
+            {
+                Filters = null;
+                return;
+            }
+
+            _filters = new List<KeyId>();
+            foreach (KeyId filter in filters)
+                _filters.Add(filter);
+
+            Filters = _filters.AsReadOnly();
         }
 
         private Key _last = null;
+        private List<KeyId> _filters = null;
 
         // internal AND protected
         internal override String Arguments()
         {
             String arguments = "--status-fd=2 --fixed-list-mode --with-colons --with-fingerprint --list-secret-keys";
 
-            if (Filters != null)
-                arguments += " " + String.Join(" ", Filters);
+            if (_filters != null)
+                arguments += " " + String.Join(" ", _filters);
 
             return arguments;
         }
@@ -62,7 +80,7 @@ namespace GpgApi
                     Key key = new Key
                     {
                         Trust = GpgConvert.ToTrust(parts[1]),
-                        Size = Convert.ToUInt32(parts[2]),
+                        Size = Convert.ToUInt32(parts[2], CultureInfo.InvariantCulture),
                         Algorithm = GpgConvert.ToKeyAlgorithm(parts[3]),
                         Id = new KeyId(parts[4]),
                         CreationDate = GpgConvert.ToDate(parts[5]),

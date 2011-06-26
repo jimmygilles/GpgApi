@@ -76,11 +76,11 @@ namespace GpgApi
         /// <summary>
         /// Determines whether the specified <see cref="System.Object"/> equals the current <see cref="GpgApi.Name"/>.
         /// </summary>
-        /// <param name="other">The object to compare with the current <see cref="GpgApi.Name"/>.</param>
+        /// <param name="obj">The object to compare with the current <see cref="GpgApi.Name"/>.</param>
         /// <returns>true if the specified Object equals the current Name; otherwise false.</returns>
-        public override Boolean Equals(Object other)
+        public override Boolean Equals(Object obj)
         {
-            return Name.Equals(this, other as Name);
+            return Name.Equals(this, obj as Name);
         }
 
         /// <summary>

@@ -20,12 +20,12 @@ namespace GpgApiUnitTests
         public void ToCipherAlgorithmTest()
         {
             Assert.AreEqual(CipherAlgorithm.None, GpgConvert_Accessor.ToCipherAlgorithm(1));
-            Assert.AreEqual(CipherAlgorithm.ThreeDES, GpgConvert_Accessor.ToCipherAlgorithm(2));
-            Assert.AreEqual(CipherAlgorithm.CAST5, GpgConvert_Accessor.ToCipherAlgorithm(3));
+            Assert.AreEqual(CipherAlgorithm.ThreeDes, GpgConvert_Accessor.ToCipherAlgorithm(2));
+            Assert.AreEqual(CipherAlgorithm.Cast5, GpgConvert_Accessor.ToCipherAlgorithm(3));
             Assert.AreEqual(CipherAlgorithm.BlowFish, GpgConvert_Accessor.ToCipherAlgorithm(4));
-            Assert.AreEqual(CipherAlgorithm.AES, GpgConvert_Accessor.ToCipherAlgorithm(7));
-            Assert.AreEqual(CipherAlgorithm.AES192, GpgConvert_Accessor.ToCipherAlgorithm(8));
-            Assert.AreEqual(CipherAlgorithm.AES256, GpgConvert_Accessor.ToCipherAlgorithm(9));
+            Assert.AreEqual(CipherAlgorithm.Aes, GpgConvert_Accessor.ToCipherAlgorithm(7));
+            Assert.AreEqual(CipherAlgorithm.Aes192, GpgConvert_Accessor.ToCipherAlgorithm(8));
+            Assert.AreEqual(CipherAlgorithm.Aes256, GpgConvert_Accessor.ToCipherAlgorithm(9));
             Assert.AreEqual(CipherAlgorithm.TwoFish, GpgConvert_Accessor.ToCipherAlgorithm(10));
             Assert.AreEqual(CipherAlgorithm.Camellia128, GpgConvert_Accessor.ToCipherAlgorithm(11));
             Assert.AreEqual(CipherAlgorithm.Camellia192, GpgConvert_Accessor.ToCipherAlgorithm(12));
@@ -38,12 +38,12 @@ namespace GpgApiUnitTests
         public void ToDigestAlgorithmTest()
         {
             Assert.AreEqual(DigestAlgorithm.MD5, GpgConvert_Accessor.ToDigestAlgorithm(1));
-            Assert.AreEqual(DigestAlgorithm.SHA1, GpgConvert_Accessor.ToDigestAlgorithm(2));
-            Assert.AreEqual(DigestAlgorithm.RMD160, GpgConvert_Accessor.ToDigestAlgorithm(3));
-            Assert.AreEqual(DigestAlgorithm.SHA256, GpgConvert_Accessor.ToDigestAlgorithm(8));
-            Assert.AreEqual(DigestAlgorithm.SHA384, GpgConvert_Accessor.ToDigestAlgorithm(9));
-            Assert.AreEqual(DigestAlgorithm.SHA512, GpgConvert_Accessor.ToDigestAlgorithm(10));
-            Assert.AreEqual(DigestAlgorithm.SHA224, GpgConvert_Accessor.ToDigestAlgorithm(11));
+            Assert.AreEqual(DigestAlgorithm.Sha1, GpgConvert_Accessor.ToDigestAlgorithm(2));
+            Assert.AreEqual(DigestAlgorithm.Rmd160, GpgConvert_Accessor.ToDigestAlgorithm(3));
+            Assert.AreEqual(DigestAlgorithm.Sha256, GpgConvert_Accessor.ToDigestAlgorithm(8));
+            Assert.AreEqual(DigestAlgorithm.Sha384, GpgConvert_Accessor.ToDigestAlgorithm(9));
+            Assert.AreEqual(DigestAlgorithm.Sha512, GpgConvert_Accessor.ToDigestAlgorithm(10));
+            Assert.AreEqual(DigestAlgorithm.Sha224, GpgConvert_Accessor.ToDigestAlgorithm(11));
         }
 
         [TestMethod]
@@ -61,12 +61,12 @@ namespace GpgApiUnitTests
         [Owner("Jimmy Gilles (jimmygilles@gmail.com)")]
         public void ToKeyAlgorithmTest()
         {
-            Assert.AreEqual(KeyAlgorithm.RSA_RSA, GpgConvert_Accessor.ToKeyAlgorithm(1));
-            Assert.AreEqual(KeyAlgorithm.RSA_Encrypt, GpgConvert_Accessor.ToKeyAlgorithm(2));
-            Assert.AreEqual(KeyAlgorithm.RSA_Sign, GpgConvert_Accessor.ToKeyAlgorithm(3));
-            Assert.AreEqual(KeyAlgorithm.ElGamal, GpgConvert_Accessor.ToKeyAlgorithm(16));
-            Assert.AreEqual(KeyAlgorithm.DSA, GpgConvert_Accessor.ToKeyAlgorithm(17));
-            Assert.AreEqual(KeyAlgorithm.DSA_ElGamal, GpgConvert_Accessor.ToKeyAlgorithm(20));
+            Assert.AreEqual(KeyAlgorithm.RsaRsa, GpgConvert_Accessor.ToKeyAlgorithm(1));
+            Assert.AreEqual(KeyAlgorithm.RsaEncrypt, GpgConvert_Accessor.ToKeyAlgorithm(2));
+            Assert.AreEqual(KeyAlgorithm.RsaSign, GpgConvert_Accessor.ToKeyAlgorithm(3));
+            Assert.AreEqual(KeyAlgorithm.ELGamal, GpgConvert_Accessor.ToKeyAlgorithm(16));
+            Assert.AreEqual(KeyAlgorithm.Dsa, GpgConvert_Accessor.ToKeyAlgorithm(17));
+            Assert.AreEqual(KeyAlgorithm.DsaELGamal, GpgConvert_Accessor.ToKeyAlgorithm(20));
         }
 
         [TestMethod]
@@ -101,12 +101,12 @@ namespace GpgApiUnitTests
         [Owner("Jimmy Gilles (jimmygilles@gmail.com)")]
         public void ToIdTest1()
         {
-            Assert.AreEqual(1, GpgConvert_Accessor.ToId(KeyAlgorithm.RSA_RSA));
-            Assert.AreEqual(2, GpgConvert_Accessor.ToId(KeyAlgorithm.DSA_ElGamal));
-            Assert.AreEqual(3, GpgConvert_Accessor.ToId(KeyAlgorithm.DSA));
-            Assert.AreEqual(4, GpgConvert_Accessor.ToId(KeyAlgorithm.RSA_Sign));
-            Assert.AreEqual(5, GpgConvert_Accessor.ToId(KeyAlgorithm.ElGamal));
-            Assert.AreEqual(6, GpgConvert_Accessor.ToId(KeyAlgorithm.RSA_Encrypt));
+            Assert.AreEqual(1, GpgConvert_Accessor.ToId(KeyAlgorithm.RsaRsa));
+            Assert.AreEqual(2, GpgConvert_Accessor.ToId(KeyAlgorithm.DsaELGamal));
+            Assert.AreEqual(3, GpgConvert_Accessor.ToId(KeyAlgorithm.Dsa));
+            Assert.AreEqual(4, GpgConvert_Accessor.ToId(KeyAlgorithm.RsaSign));
+            Assert.AreEqual(5, GpgConvert_Accessor.ToId(KeyAlgorithm.ELGamal));
+            Assert.AreEqual(6, GpgConvert_Accessor.ToId(KeyAlgorithm.RsaEncrypt));
         }
 
         [TestMethod]
@@ -125,12 +125,12 @@ namespace GpgApiUnitTests
         [Owner("Jimmy Gilles (jimmygilles@gmail.com)")]
         public void ToNameTest()
         {
-            Assert.AreEqual("3DES", GpgConvert_Accessor.ToName(CipherAlgorithm.ThreeDES));
-            Assert.AreEqual("CAST5", GpgConvert_Accessor.ToName(CipherAlgorithm.CAST5));
+            Assert.AreEqual("3DES", GpgConvert_Accessor.ToName(CipherAlgorithm.ThreeDes));
+            Assert.AreEqual("CAST5", GpgConvert_Accessor.ToName(CipherAlgorithm.Cast5));
             Assert.AreEqual("BLOWFISH", GpgConvert_Accessor.ToName(CipherAlgorithm.BlowFish));
-            Assert.AreEqual("AES", GpgConvert_Accessor.ToName(CipherAlgorithm.AES));
-            Assert.AreEqual("AES192", GpgConvert_Accessor.ToName(CipherAlgorithm.AES192));
-            Assert.AreEqual("AES256", GpgConvert_Accessor.ToName(CipherAlgorithm.AES256));
+            Assert.AreEqual("AES", GpgConvert_Accessor.ToName(CipherAlgorithm.Aes));
+            Assert.AreEqual("AES192", GpgConvert_Accessor.ToName(CipherAlgorithm.Aes192));
+            Assert.AreEqual("AES256", GpgConvert_Accessor.ToName(CipherAlgorithm.Aes256));
             Assert.AreEqual("TWOFISH", GpgConvert_Accessor.ToName(CipherAlgorithm.TwoFish));
             Assert.AreEqual("CAMELLIA128", GpgConvert_Accessor.ToName(CipherAlgorithm.Camellia128));
             Assert.AreEqual("CAMELLIA192", GpgConvert_Accessor.ToName(CipherAlgorithm.Camellia192));

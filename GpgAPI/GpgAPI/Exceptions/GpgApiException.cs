@@ -26,12 +26,13 @@ namespace GpgApi
     /// <summary>
     /// This is the base class for all exception thrown by the GpgApi
     /// </summary>
-    public abstract class GpgApiException : Exception
+    [Serializable]
+    public class GpgApiException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GpgApi.GpgApiException"/> class.
         /// </summary>
-        protected GpgApiException()
+        public GpgApiException()
         {
         }
 
@@ -39,7 +40,7 @@ namespace GpgApi
         /// Initializes a new instance of the <see cref="GpgApi.GpgApiException"/> class with a specified error message.
         /// </summary>
         /// <param name="message">The error message that explains the reason for this exception.</param>
-        protected GpgApiException(String message) : base(message)
+        public GpgApiException(String message) : base(message)
         {
         }
 
@@ -57,7 +58,7 @@ namespace GpgApi
         /// </summary>
         /// <param name="message">The error message that explains the reason for this exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
-        protected GpgApiException(String message, Exception innerException) : base(message, innerException)
+        public GpgApiException(String message, Exception innerException) : base(message, innerException)
         {
         }
     }

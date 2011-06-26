@@ -52,7 +52,7 @@ namespace GpgApi
         {
             if (!FingerPrint.IsValid(fingerPrint))
                 throw new InvalidFingerPrintException();
-            _fingerPrint = fingerPrint.ToUpper();
+            _fingerPrint = fingerPrint.ToUpperInvariant();
         }
 
         /// <summary>
@@ -76,11 +76,11 @@ namespace GpgApi
         /// <summary>
         /// Determines whether the specified <see cref="System.Object"/> equals the current <see cref="GpgApi.FingerPrint"/>.
         /// </summary>
-        /// <param name="other">The object to compare with the current <see cref="GpgApi.FingerPrint"/>.</param>
+        /// <param name="obj">The object to compare with the current <see cref="GpgApi.FingerPrint"/>.</param>
         /// <returns>true if the specified Object equals the current FingerPrint; otherwise false.</returns>
-        public override Boolean Equals(Object other)
+        public override Boolean Equals(Object obj)
         {
-            return FingerPrint.Equals(this, other as FingerPrint);
+            return FingerPrint.Equals(this, obj as FingerPrint);
         }
 
         /// <summary>

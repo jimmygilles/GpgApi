@@ -79,17 +79,17 @@ namespace GpgApi
         /// <summary>
         /// List of user info associated to this key.
         /// </summary>
-        public List<KeyUserInfo> UserInfos { get; private set; }
+        public IList<KeyUserInfo> UserInfos { get; private set; }
 
         /// <summary>
         /// List of photos associated to this key.
         /// </summary>
-        public List<KeyPhoto> Photos { get; private set; }
+        public IList<KeyPhoto> Photos { get; private set; }
 
         /// <summary>
         /// List of subkeys associated to this key.
         /// </summary>
-        public List<KeySub> SubKeys { get; private set; }
+        public IList<KeySub> SubKeys { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GpgApi.Key"/> class.

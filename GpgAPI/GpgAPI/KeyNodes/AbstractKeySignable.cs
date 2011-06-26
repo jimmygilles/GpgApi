@@ -24,7 +24,7 @@ namespace GpgApi
 {
     public abstract class AbstractKeySignable
     {
-        public List<KeySignature> Signatures { get; private set; }
+        public IList<KeySignature> Signatures { get; private set; }
 
         // internal AND protected
         internal AbstractKeySignable()
