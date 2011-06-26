@@ -20,6 +20,7 @@
 
 using System;
 using System.Text.RegularExpressions;
+using System.Security.Permissions;
 
 namespace GpgApi
 {
@@ -52,7 +53,7 @@ namespace GpgApi
         {
             if (!KeyId.IsValid(keyId))
                 throw new InvalidKeyIdException();
-            _keyId = keyId.ToUpper();
+            _keyId = keyId.ToUpperInvariant();
         }
 
         /// <summary>
@@ -76,11 +77,11 @@ namespace GpgApi
         /// <summary>
         /// Determines whether the specified <see cref="System.Object"/> equals the current <see cref="GpgApi.KeyId"/>.
         /// </summary>
-        /// <param name="other">The object to compare with the current <see cref="GpgApi.KeyId"/>.</param>
+        /// <param name="obj">The object to compare with the current <see cref="GpgApi.KeyId"/>.</param>
         /// <returns>true if the specified Object equals the current KeyId; otherwise false.</returns>
-        public override Boolean Equals(Object other)
+        public override Boolean Equals(Object obj)
         {
-            return KeyId.Equals(this, other as KeyId);
+            return KeyId.Equals(this, obj as KeyId);
         }
 
         /// <summary>

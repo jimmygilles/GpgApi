@@ -29,6 +29,7 @@ namespace GpgApi
     /// <remarks>
     /// To avoid this exception you can determine whether the email address you want to use is valid with the static method <see cref="GpgApi.Email.IsValid"/>.
     /// </remarks>
+    [Serializable]
     public class InvalidEmailAddressException : GpgApiException
     {
         /// <summary>

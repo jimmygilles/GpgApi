@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace GpgApi
@@ -38,7 +39,7 @@ namespace GpgApi
     /// </remarks>
     public class GpgImportKey : GpgInterface
     {
-        public String Filename { get; private set; }
+        public String FileName { get; private set; }
         public KeyId KeyId { get; private set; }
         public IEnumerable<Uri> Servers { get; private set; }
         public FingerPrint FingerPrint { get; private set; }
@@ -58,34 +59,34 @@ namespace GpgApi
             if (servers == null)
                 throw new ArgumentNullException("servers");
 
-            Filename = null;
+            FileName = null;
             KeyId = keyId;
             Servers = servers;
             FingerPrint = null;
-            Import = Import.Unknown;
+            Import = Import.None;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GpgApi.GpgImportKey"/> class.
         /// </summary>
-        /// <param name="filename"></param>
-        public GpgImportKey(String filename)
+        /// <param name="fileName"></param>
+        public GpgImportKey(String fileName)
         {
-            if (filename == null)
-                throw new ArgumentNullException("filename");
+            if (fileName == null)
+                throw new ArgumentNullException("fileName");
 
-            Filename = filename;
+            FileName = fileName;
             KeyId = null;
             Servers = null;
             FingerPrint = null;
-            Import = Import.Unknown;
+            Import = Import.None;
         }
 
         // internal AND protected
         internal override String Arguments()
         {
-            if (Filename != null)
-                return "--import " + Utils.EscapePath(Filename);
+            if (FileName != null)
+                return "--import " + Utils.EscapePath(FileName);
 
             return "--keyserver " + String.Join(",", Servers) + " --recv-keys " + KeyId;
         }
@@ -93,8 +94,8 @@ namespace GpgApi
         // internal AND protected
         internal override GpgInterfaceResult BeforeStartProcess()
         {
-            if (!File.Exists(Filename))
-                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.FileNotFound, Filename);
+            if (!File.Exists(FileName))
+                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.FileNotFound, FileName);
 
             return GpgInterfaceResult.Success;
         }
@@ -114,7 +115,7 @@ namespace GpgApi
                 {
                     String[] parts = line.Split(new Char[] { ' ' });
 
-                    Int32 flag = Int32.Parse(parts[0]);
+                    Int32 flag = Int32.Parse(parts[0], CultureInfo.InvariantCulture);
                     FingerPrint = new FingerPrint(parts[1]);
 
                     if (flag == 0)

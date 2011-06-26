@@ -29,6 +29,7 @@ namespace GpgApi
     /// <remarks>
     /// To avoid this exception you can determine whether the key id you want to use is valid with the static method <see cref="GpgApi.KeyId.IsValid"/>.
     /// </remarks>
+    [Serializable]
     public class InvalidKeyIdException : GpgApiException
     {
         /// <summary>

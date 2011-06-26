@@ -61,7 +61,7 @@ namespace GpgApi
         /// <summary>
         /// The file's path is not valid.
         /// </summary>
-        InvalidFilename,
+        InvalidFileName,
 
         /// <summary>
         /// The image is not a jpeg image (the only format supported by GPG)
@@ -99,12 +99,12 @@ namespace GpgApi
         /// <summary>
         /// The generate key method is generating a DSA key
         /// </summary>
-        GeneratingDSAKey,
+        GeneratingDsaKey,
 
         /// <summary>
         /// The generate key method is generating a ElGamal key
         /// </summary>
-        GeneratingElGamalKey,
+        GeneratingELGamalKey,
 
         /// <summary>
         /// The generate key method is waiting for entropy

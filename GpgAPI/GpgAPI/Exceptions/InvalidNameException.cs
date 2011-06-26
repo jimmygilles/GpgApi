@@ -29,6 +29,7 @@ namespace GpgApi
     /// <remarks>
     /// To avoid this exception you can determine whether the name you want to use is valid with the static method <see cref="GpgApi.Name.IsValid"/>.
     /// </remarks>
+    [Serializable]
     public class InvalidNameException : GpgApiException
     {
         /// <summary>

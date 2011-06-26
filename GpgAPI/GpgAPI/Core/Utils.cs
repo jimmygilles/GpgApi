@@ -22,6 +22,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 
 namespace GpgApi
@@ -37,7 +38,7 @@ namespace GpgApi
             ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = "taskkill.exe",
-                Arguments = String.Concat("/F /T /PID ", processId.ToString()),
+                Arguments = String.Concat("/F /T /PID ", processId.ToString(CultureInfo.InvariantCulture)),
                 CreateNoWindow = true,
                 UseShellExecute = false
             };

@@ -39,12 +39,12 @@ namespace GpgApi
         /// <summary>
         /// Encrypt using the 3DES algorithm.
         /// </summary>
-        ThreeDES,
+        ThreeDes,
 
         /// <summary>
         /// Encrypt using the Cast 5 (also named "cast 128") algorithm.
         /// </summary>
-        CAST5,
+        Cast5,
 
         /// <summary>
         /// Encrypt using the Blowfish algorithm.
@@ -54,17 +54,17 @@ namespace GpgApi
         /// <summary>
         /// Encrypt using the AES algorithm.
         /// </summary>
-        AES,
+        Aes,
 
         /// <summary>
         /// Encrypt using the AES-192 algorithm.
         /// </summary>
-        AES192,
+        Aes192,
 
         /// <summary>
         /// Encrypt using the AES-256 algorithm.
         /// </summary>
-        AES256,
+        Aes256,
 
         /// <summary>
         /// Encrypt using the TwoFish algorithm.
@@ -105,32 +105,32 @@ namespace GpgApi
         /// <summary>
         /// Hash using the SHA1 algorithm.
         /// </summary>
-        SHA1,
+        Sha1,
 
         /// <summary>
         /// Hash using the RIPEMD-160 algorithm.
         /// </summary>
-        RMD160,
+        Rmd160,
 
         /// <summary>
         /// Hash using the SHA-256 algorithm.
         /// </summary>
-        SHA256,
+        Sha256,
 
         /// <summary>
         /// Hash using the SHA-384 algorithm.
         /// </summary>
-        SHA384,
+        Sha384,
 
         /// <summary>
         /// Hash using the SHA-512 algorithm.
         /// </summary>
-        SHA512,
+        Sha512,
 
         /// <summary>
         /// Hash using the SHA-224 algorithm.
         /// </summary>
-        SHA224
+        Sha224
     }
 
     /// <summary>
@@ -147,32 +147,32 @@ namespace GpgApi
         /// <summary>
         /// Encrypt and sign datas using the RSA algorithm.
         /// </summary>
-        RSA_RSA,
+        RsaRsa,
 
         /// <summary>
         /// Encrypt datas using the RSA algorithm.
         /// </summary>
-        RSA_Encrypt,
+        RsaEncrypt,
 
         /// <summary>
         /// Sign datas using the RSA algorithm.
         /// </summary>
-        RSA_Sign,
+        RsaSign,
 
         /// <summary>
         /// Sign datas using the DSA algorithm.
         /// </summary>
-        DSA,
+        Dsa,
 
         /// <summary>
         /// Encrypt datas using the ElGamal algorithm.
         /// </summary>
-        ElGamal,
+        ELGamal,
 
         /// <summary>
         /// Encrypt and sign datas using the DSA/ElGamal algorithm.
         /// </summary>
-        DSA_ElGamal
+        DsaELGamal
     }
 
     /// <summary>
@@ -262,7 +262,7 @@ namespace GpgApi
     [Flags]
     public enum Import
     {
-        Unknown = 0,
+        None = 0,
         Unchanged = 1,
         NewKey = 2,
         NewUserIds = 4,

@@ -29,6 +29,7 @@ namespace GpgApi
     /// <remarks>
     /// To avoid this exception you can determine whether the fingerprint you want to use is valid with the static method <see cref="GpgApi.FingerPrint.IsValid"/>.
     /// </remarks>
+    [Serializable]
     public class InvalidFingerPrintException : GpgApiException
     {
         /// <summary>

@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
+using System.Security.Permissions;
 
 namespace GpgApi
 {
@@ -47,11 +48,12 @@ namespace GpgApi
         /// <summary>
         /// Absolute path to the GPG executable.
         /// </summary>
-        public static String ExePath = null;
-        public static SynchronizationContext SynchronizationContext = null;
+        public static String ExePath { get; set; }
+        public static SynchronizationContext SynchronizationContext { get; set; }
 
         public event GpgInterfaceEventHandler GpgInterfaceEvent;
-        public Func<AskPassphraseInfo, String> AskPassphrase = null;
+        public Func<AskPassphraseInfo, String> AskPassphrase { get; set; }
+        public TextWriter LogWriter { get; set; }
 
         private const Int32 PassphraseMaxTries = 3;
         private Process _process = null;
@@ -63,12 +65,20 @@ namespace GpgApi
         private Thread _outputThread = null;
         private ConcurrentQueue<GpgOutput> _output = new ConcurrentQueue<GpgOutput>();
 
-        private EventWaitHandle _outputEventWait = new ManualResetEvent(false);
-        private EventWaitHandle _abortedEventWait = new ManualResetEvent(false);
-        private EventWaitHandle _exitedEventWait = new ManualResetEvent(false);
+        private EventWaitHandle _outputEventWait = null;
+        private EventWaitHandle _abortedEventWait = null;
+        private EventWaitHandle _exitedEventWait = null;
+
+        static GpgInterface()
+        {
+            ExePath = null;
+            SynchronizationContext = null;
+        }
 
         internal GpgInterface()
         {
+            AskPassphrase = null;
+            LogWriter = null;
         }
 
         // ----------------------------------------------------------------------------------------
@@ -106,19 +116,24 @@ namespace GpgApi
 
         // ----------------------------------------------------------------------------------------
 
-        public void ExecuteAsync(Action<GpgInterfaceResult> Completed = null)
+        public void ExecuteAsync()
+        {
+            ExecuteAsync(null);
+        }
+
+        public void ExecuteAsync(Action<GpgInterfaceResult> completed)
         {
             Thread thread = new Thread(delegate()
             {
                 GpgInterfaceResult result = Execute();
 
-                if (Completed == null)
+                if (completed == null)
                     return;
 
                 if (SynchronizationContext == null)
-                    Completed(result);
+                    completed(result);
                 else
-                    SynchronizationContext.Send(delegate { Completed(result); }, null);
+                    SynchronizationContext.Send(delegate { completed(result); }, null);
             });
 
             thread.Name = ToString();
@@ -140,6 +155,10 @@ namespace GpgApi
 
                 if (!File.Exists(GpgInterface.ExePath))
                     throw new FileNotFoundException(null, GpgInterface.ExePath);
+
+                _outputEventWait = new ManualResetEvent(false);
+                _abortedEventWait = new ManualResetEvent(false);
+                _exitedEventWait = new ManualResetEvent(false);
 
                 Log("Execute " + this);
 
@@ -301,7 +320,17 @@ namespace GpgApi
         // internal AND protected
         internal void Log(String str, Boolean error = false)
         {
-            //Console.WriteLine(str);
+            try
+            {
+                if (LogWriter != null)
+                {
+                    LogWriter.WriteLine((error ? "[Error] - " : String.Empty) + ToString() + " - " + str);
+                }
+            }
+            catch
+            {
+                // Do Nothing
+            }
         }
 
         // internal AND protected
@@ -317,7 +346,7 @@ namespace GpgApi
         }
 
         // internal AND protected
-        internal Boolean GNUCheck(ref String line)
+        internal static Boolean GNUCheck(ref String line)
         {
             if (line != null && line.StartsWith("[GNUPG:] ", StringComparison.Ordinal))
             {
@@ -329,7 +358,7 @@ namespace GpgApi
         }
 
         // internal AND protected
-        internal GpgKeyword GetKeyword(ref String line)
+        internal static GpgKeyword GetKeyword(ref String line)
         {
             String name = line;
 
@@ -400,7 +429,7 @@ namespace GpgApi
         }
 
         // internal AND protected
-        internal String EncodeString(String str)
+        internal static String EncodeString(String str)
         {
             return Encoding.Default.GetString(Encoding.UTF8.GetBytes(str));
         }

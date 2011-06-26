@@ -37,18 +37,18 @@ namespace GpgApi
     ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.NoSecretKey"/></term></item>
     ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.NoPublicKey"/></term></item>
     ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.DataError"/></term></item>
-    ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.InvalidFilename"/></term></item>
+    ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.InvalidFileName"/></term></item>
     ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.FileNotFound"/></term></item>
     /// </list>
     /// </remarks>
     public sealed class GpgDecrypt : GpgInterface
     {
-        public String EncryptedFilename { get; private set; }
-        public String DecryptedFilename { get; private set; }
+        public String EncryptedFileName { get; private set; }
+        public String DecryptedFileName { get; private set; }
         public Int32 DecryptedDataLength { get; private set; }      // Taille des données décryptées.
         public DataType DecryptedDataType { get; private set; }     // Le type de données décryptées (binaires, texte, etc.)
         public DateTime EncryptionDateTime { get; private set; }    // La date à laquelle les données ont été encryptées
-        public String OriginalFilename { get; private set; }        // Le nom original du fichier encrypté. Si les données ne proviennent pas d'un fichier, ce sera null
+        public String OriginalFileName { get; private set; }        // Le nom original du fichier encrypté. Si les données ne proviennent pas d'un fichier, ce sera null
         public Boolean IsSigned { get; private set; }               // Indique si les données étaient signées avant d'être encryptées
         public Boolean IsGoodSignature { get; private set; }        // Indique si la signature est bonne (message non altéré)
         public DateTime SignatureDateTime { get; private set; }     // Indique la date et heure de la signature
@@ -58,23 +58,23 @@ namespace GpgApi
         /// <summary>
         /// Initializes a new instance of the <see cref="GpgApi.GpgDecrypt"/> class.
         /// </summary>
-        /// <param name="encryptedFilename"></param>
-        /// <param name="decryptedFilename"></param>
+        /// <param name="encryptedFileName"></param>
+        /// <param name="decryptedFileName"></param>
         /// <exception cref="System.ArgumentNullException"/>
-        public GpgDecrypt(String encryptedFilename, String decryptedFilename)
+        public GpgDecrypt(String encryptedFileName, String decryptedFileName)
         {
-            if (encryptedFilename == null)
-                throw new ArgumentNullException("encryptedFilename");
+            if (encryptedFileName == null)
+                throw new ArgumentNullException("encryptedFileName");
 
-            if (decryptedFilename == null)
-                throw new ArgumentNullException("decryptedFilename");
+            if (decryptedFileName == null)
+                throw new ArgumentNullException("decryptedFileName");
 
-            EncryptedFilename = encryptedFilename;
-            DecryptedFilename = decryptedFilename;
+            EncryptedFileName = encryptedFileName;
+            DecryptedFileName = decryptedFileName;
             DecryptedDataLength = 0;
             DecryptedDataType = DataType.None;
             EncryptionDateTime = DateTime.MinValue;
-            OriginalFilename = null;
+            OriginalFileName = null;
             IsSigned = false;
             IsGoodSignature = false;
             SignatureDateTime = DateTime.MinValue;
@@ -91,20 +91,20 @@ namespace GpgApi
         internal override String Arguments()
         {
             String args = "";
-            args += "--output " + Utils.EscapePath(DecryptedFilename);
+            args += "--output " + Utils.EscapePath(DecryptedFileName);
             args += " ";
-            args += "--decrypt " + Utils.EscapePath(EncryptedFilename);
+            args += "--decrypt " + Utils.EscapePath(EncryptedFileName);
             return args;
         }
 
         // internal AND protected
         internal override GpgInterfaceResult BeforeStartProcess()
         {
-            if (!File.Exists(EncryptedFilename))
+            if (!File.Exists(EncryptedFileName))
                 return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.FileNotFound);
 
-            if (!Utils.IsValidPath(DecryptedFilename))
-                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.InvalidFilename, DecryptedFilename);
+            if (!Utils.IsValidPath(DecryptedFileName))
+                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.InvalidFileName, DecryptedFileName);
 
             return GpgInterfaceResult.Success;
         }
@@ -158,7 +158,7 @@ namespace GpgApi
 
                 case GpgKeyword.PLAINTEXT_LENGTH:
                 {
-                    DecryptedDataLength = Int32.Parse(line);
+                    DecryptedDataLength = Int32.Parse(line, CultureInfo.InvariantCulture);
                     break;
                 }
 
@@ -174,8 +174,8 @@ namespace GpgApi
                         case "75": DecryptedDataType = DataType.Utf8Text; break;
                     }
 
-                    EncryptionDateTime = Utils.ConvertTimestamp(Double.Parse(parts[1]));
-                    OriginalFilename = Uri.UnescapeDataString(parts[2]);
+                    EncryptionDateTime = Utils.ConvertTimestamp(Double.Parse(parts[1], CultureInfo.InvariantCulture));
+                    OriginalFileName = Uri.UnescapeDataString(parts[2]);
 
                     break;
                 }
@@ -226,7 +226,7 @@ namespace GpgApi
                         SignatureDateTime = DateTime.ParseExact(datetime, "s", CultureInfo.InvariantCulture);
                     }
                     else
-                        SignatureDateTime = Utils.ConvertTimestamp(Double.Parse(datetime));
+                        SignatureDateTime = Utils.ConvertTimestamp(Double.Parse(datetime, CultureInfo.InvariantCulture));
 
                     break;
                 }

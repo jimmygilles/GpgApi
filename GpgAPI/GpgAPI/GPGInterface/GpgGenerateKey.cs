@@ -29,8 +29,8 @@ namespace GpgApi
     /// Here is the list of <see cref="GpgApi.GpgInterfaceMessage"/> used by this class.
     /// <list type="bullet">
     ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.GeneratingPrimeNumbers"/></term></item>
-    ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.GeneratingDSAKey"/></term></item>
-    ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.GeneratingElGamalKey"/></term></item>
+    ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.GeneratingDsaKey"/></term></item>
+    ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.GeneratingELGamalKey"/></term></item>
     ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.NeedEntropy"/></term></item>
     ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.SizeTooSmall"/></term></item>
     ///     <item><term><see cref="GpgApi.GpgInterfaceMessage.SizeTooBig"/></term></item>
@@ -88,11 +88,11 @@ namespace GpgApi
 
             switch (Algorithm)
             {
-                case KeyAlgorithm.RSA_RSA:
+                case KeyAlgorithm.RsaRsa:
                     minsize = 1024;
                     maxsize = 4096;
                     break;
-                case KeyAlgorithm.DSA_ElGamal:
+                case KeyAlgorithm.DsaELGamal:
                     minsize = 1024;
                     maxsize = 3072;
                     break;
@@ -139,8 +139,8 @@ namespace GpgApi
                         switch (parts[0])
                         {
                             case "primegen": return new GpgInterfaceResult(GpgInterfaceStatus.Processing, GpgInterfaceMessage.GeneratingPrimeNumbers);
-                            case "pk_dsa": return new GpgInterfaceResult(GpgInterfaceStatus.Processing, GpgInterfaceMessage.GeneratingDSAKey);
-                            case "pk_elg": return new GpgInterfaceResult(GpgInterfaceStatus.Processing, GpgInterfaceMessage.GeneratingElGamalKey);
+                            case "pk_dsa": return new GpgInterfaceResult(GpgInterfaceStatus.Processing, GpgInterfaceMessage.GeneratingDsaKey);
+                            case "pk_elg": return new GpgInterfaceResult(GpgInterfaceStatus.Processing, GpgInterfaceMessage.GeneratingELGamalKey);
                             case "need_entropy": return new GpgInterfaceResult(GpgInterfaceStatus.Processing, GpgInterfaceMessage.NeedEntropy);
                         }
                     }

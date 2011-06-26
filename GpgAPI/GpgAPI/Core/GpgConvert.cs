@@ -29,12 +29,12 @@ namespace GpgApi
             switch (i)
             {
                 //case 1 : return CipherAlgorithm.IDEA;     // See comment in Enums.cs
-                case 2 : return CipherAlgorithm.ThreeDES;
-                case 3 : return CipherAlgorithm.CAST5;
+                case 2 : return CipherAlgorithm.ThreeDes;
+                case 3 : return CipherAlgorithm.Cast5;
                 case 4 : return CipherAlgorithm.BlowFish;
-                case 7 : return CipherAlgorithm.AES;
-                case 8 : return CipherAlgorithm.AES192;
-                case 9 : return CipherAlgorithm.AES256;
+                case 7 : return CipherAlgorithm.Aes;
+                case 8 : return CipherAlgorithm.Aes192;
+                case 9 : return CipherAlgorithm.Aes256;
                 case 10 : return CipherAlgorithm.TwoFish;
                 case 11 : return CipherAlgorithm.Camellia128;
                 case 12 : return CipherAlgorithm.Camellia192;
@@ -48,12 +48,12 @@ namespace GpgApi
             switch (i)
             {
                 case 1 : return DigestAlgorithm.MD5;
-                case 2 : return DigestAlgorithm.SHA1;
-                case 3 : return DigestAlgorithm.RMD160;
-                case 8 : return DigestAlgorithm.SHA256;
-                case 9 : return DigestAlgorithm.SHA384;
-                case 10 : return DigestAlgorithm.SHA512;
-                case 11 : return DigestAlgorithm.SHA224;
+                case 2 : return DigestAlgorithm.Sha1;
+                case 3 : return DigestAlgorithm.Rmd160;
+                case 8 : return DigestAlgorithm.Sha256;
+                case 9 : return DigestAlgorithm.Sha384;
+                case 10 : return DigestAlgorithm.Sha512;
+                case 11 : return DigestAlgorithm.Sha224;
                 default : return DigestAlgorithm.None;
             }
         }
@@ -73,12 +73,12 @@ namespace GpgApi
         {
             switch (i)
             {
-                case 1 : return KeyAlgorithm.RSA_RSA;
-                case 2 : return KeyAlgorithm.RSA_Encrypt;
-                case 3 : return KeyAlgorithm.RSA_Sign;
-                case 16 : return KeyAlgorithm.ElGamal;
-                case 17 : return KeyAlgorithm.DSA;
-                case 20 : return KeyAlgorithm.DSA_ElGamal;
+                case 1 : return KeyAlgorithm.RsaRsa;
+                case 2 : return KeyAlgorithm.RsaEncrypt;
+                case 3 : return KeyAlgorithm.RsaSign;
+                case 16 : return KeyAlgorithm.ELGamal;
+                case 17 : return KeyAlgorithm.Dsa;
+                case 20 : return KeyAlgorithm.DsaELGamal;
                 default : return KeyAlgorithm.None;
             }
         }
@@ -144,12 +144,12 @@ namespace GpgApi
             switch (algorithm)
             {
                 case KeyAlgorithm.None: return 1;
-                case KeyAlgorithm.RSA_RSA: return 1;
-                case KeyAlgorithm.DSA_ElGamal: return 2;
-                case KeyAlgorithm.DSA: return 3;
-                case KeyAlgorithm.RSA_Sign: return 4;
-                case KeyAlgorithm.ElGamal: return 5;
-                case KeyAlgorithm.RSA_Encrypt: return 6;
+                case KeyAlgorithm.RsaRsa: return 1;
+                case KeyAlgorithm.DsaELGamal: return 2;
+                case KeyAlgorithm.Dsa: return 3;
+                case KeyAlgorithm.RsaSign: return 4;
+                case KeyAlgorithm.ELGamal: return 5;
+                case KeyAlgorithm.RsaEncrypt: return 6;
                 default: return 1;
             }
         }
@@ -172,12 +172,12 @@ namespace GpgApi
             {
                 //case CipherAlgorithm.IDEA: return "IDEA";     // See comment in Enums.cs
                 case CipherAlgorithm.None: return String.Empty;
-                case CipherAlgorithm.ThreeDES: return "3DES";
-                case CipherAlgorithm.CAST5: return "CAST5";
+                case CipherAlgorithm.ThreeDes: return "3DES";
+                case CipherAlgorithm.Cast5: return "CAST5";
                 case CipherAlgorithm.BlowFish: return "BLOWFISH";
-                case CipherAlgorithm.AES: return "AES";
-                case CipherAlgorithm.AES192: return "AES192";
-                case CipherAlgorithm.AES256: return "AES256";
+                case CipherAlgorithm.Aes: return "AES";
+                case CipherAlgorithm.Aes192: return "AES192";
+                case CipherAlgorithm.Aes256: return "AES256";
                 case CipherAlgorithm.TwoFish: return "TWOFISH";
                 case CipherAlgorithm.Camellia128: return "CAMELLIA128";
                 case CipherAlgorithm.Camellia192: return "CAMELLIA192";
@@ -193,7 +193,7 @@ namespace GpgApi
 
             UInt32 i;
             if (!UInt32.TryParse(s, out i))
-                throw new Exception("Invalid date time: " + s);
+                throw new GpgApiException("Invalid date time: " + s);
 
             return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(i);
         }

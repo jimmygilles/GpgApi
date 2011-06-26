@@ -78,7 +78,7 @@ namespace GpgApi
             {
                 UInt32 i;
                 if (!UInt32.TryParse(datetime, out i))
-                    throw new Exception("Invalid date time: " + datetime);
+                    throw new GpgApiException("Invalid date time: " + datetime);
 
                 DateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(i);
                 IsUnlimited = DateTime == DateTime.MaxValue;
@@ -106,11 +106,11 @@ namespace GpgApi
         /// <summary>
         /// Determines whether the specified <see cref="System.Object"/> equals the current <see cref="GpgApi.GpgDateTime"/>.
         /// </summary>
-        /// <param name="other">The object to compare with the current <see cref="GpgApi.GpgDateTime"/>.</param>
+        /// <param name="obj">The object to compare with the current <see cref="GpgApi.GpgDateTime"/>.</param>
         /// <returns>true if the specified Object equals the current GpgDateTime; otherwise false.</returns>
-        public override Boolean Equals(Object other)
+        public override Boolean Equals(Object obj)
         {
-            return GpgDateTime.Equals(this, other as GpgDateTime);
+            return GpgDateTime.Equals(this, obj as GpgDateTime);
         }
 
         /// <summary>

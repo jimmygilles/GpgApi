@@ -29,7 +29,7 @@ namespace GpgApi
     /// </summary>
     public sealed class GpgVerifySignature : GpgInterface
     {
-        public String Filename { get; private set; }
+        public String FileName { get; private set; }
 
         public KeyOwnerTrust SignatureTrust { get; private set; }
         public Boolean IsSigned { get; private set; }
@@ -37,9 +37,9 @@ namespace GpgApi
         public KeyId SignatureKeyId { get; private set; }
         public DateTime SignatureDateTime { get; private set; }
 
-        public GpgVerifySignature(String filename)
+        public GpgVerifySignature(String fileName)
         {
-            Filename = filename;
+            FileName = fileName;
             SignatureTrust = KeyOwnerTrust.None;
             IsSigned = false;
             IsGoodSignature = false;
@@ -50,14 +50,14 @@ namespace GpgApi
         // internal AND protected
         internal override String Arguments()
         {
-            return "--verify " + Utils.EscapePath(Filename);
+            return "--verify " + Utils.EscapePath(FileName);
         }
 
         // internal AND protected
         internal override GpgInterfaceResult BeforeStartProcess()
         {
-            if (!File.Exists(Filename))
-                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.FileNotFound, Filename);
+            if (!File.Exists(FileName))
+                return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.FileNotFound, FileName);
 
             return GpgInterfaceResult.Success;
         }
@@ -97,7 +97,7 @@ namespace GpgApi
                         SignatureDateTime = DateTime.ParseExact(datetime, "s", CultureInfo.InvariantCulture);
                     }
                     else
-                        SignatureDateTime = Utils.ConvertTimestamp(Double.Parse(datetime));
+                        SignatureDateTime = Utils.ConvertTimestamp(Double.Parse(datetime, CultureInfo.InvariantCulture));
 
                     break;
                 }
