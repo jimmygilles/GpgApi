@@ -24,7 +24,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
-using System.Security.Permissions;
 
 namespace GpgApi
 {
