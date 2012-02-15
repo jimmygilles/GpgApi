@@ -235,7 +235,12 @@ namespace GpgApi
                     return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.NoPublicKey, line);
 
                 case GpgKeyword.NO_SECKEY:
-                    return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.NoSecretKey, line);
+                {
+                    if (_googPassphrase)
+                        return GpgInterfaceResult.Success;
+                    else
+                        return new GpgInterfaceResult(GpgInterfaceStatus.Error, GpgInterfaceMessage.NoSecretKey, line);
+                }
 
                 case GpgKeyword.NODATA:
                 case GpgKeyword.UNEXPECTED:
