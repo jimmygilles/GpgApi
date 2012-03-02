@@ -48,6 +48,7 @@ namespace GpgApi
         /// Absolute path to the GPG executable.
         /// </summary>
         public static String ExePath { get; set; }
+        public static String HomeDir { get; set; }
         public static SynchronizationContext SynchronizationContext { get; set; }
 
         public event GpgInterfaceEventHandler GpgInterfaceEvent;
@@ -406,7 +407,14 @@ namespace GpgApi
 
         private Process GetProcess(String arguments)
         {
+            String homeDir = HomeDir;
+            if (String.IsNullOrWhiteSpace(homeDir))
+                homeDir = String.Empty;
+            else
+                homeDir = "--homedir " + Utils.EscapePath(homeDir) + " ";
+
             arguments = (arguments.Contains("--status-fd=") ? "" : "--status-fd=1 ")
+                      + homeDir
                       + "--command-fd=0 --no-verbose --no-greeting --no-secmem-warning --no-tty --display-charset utf8 "
                       + arguments;
 
