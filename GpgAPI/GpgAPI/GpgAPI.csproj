@@ -57,6 +57,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -70,6 +71,7 @@
     <Compile Include="Core\AskPassphraseInfo.cs" />
     <Compile Include="Core\GpgDateTime.cs" />
     <Compile Include="Core\Name.cs" />
+    <Compile Include="Core\SecureStringToCharArrayMarshaler.cs" />
     <Compile Include="Exceptions\GpgApiException.cs" />
     <Compile Include="Exceptions\GpgInterfaceAlreadyUsed.cs" />
     <Compile Include="Exceptions\InvalidFingerPrintException.cs" />

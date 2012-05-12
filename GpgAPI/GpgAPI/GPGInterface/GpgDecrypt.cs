@@ -21,6 +21,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Security;
 
 namespace GpgApi
 {
@@ -184,10 +185,10 @@ namespace GpgApi
                 {
                     if (String.Equals(line, "passphrase.enter", StringComparison.Ordinal))
                     {
-                        String password = InternalAskPassphrase(_keyId, false, _isSymmetric);
-                        if (String.IsNullOrEmpty(password))
+                        SecureString password = InternalAskPassphrase(_keyId, false, _isSymmetric);
+                        if (IsNullOrEmpty(password))
                             return GpgInterfaceResult.UserAbort;
-                        WriteLine(password);
+                        WritePassword(password);
                     }
 
                     break;

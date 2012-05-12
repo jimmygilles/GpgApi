@@ -22,6 +22,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
+using System.Security;
 using System.Text;
 using System.Threading;
 
@@ -52,7 +53,7 @@ namespace GpgApi
         public static SynchronizationContext SynchronizationContext { get; set; }
 
         public event GpgInterfaceEventHandler GpgInterfaceEvent;
-        public Func<AskPassphraseInfo, String> AskPassphrase { get; set; }
+        public Func<AskPassphraseInfo, SecureString> AskPassphrase { get; set; }
         public TextWriter LogWriter { get; set; }
 
         private const Int32 PassphraseMaxTries = 3;
@@ -98,11 +99,11 @@ namespace GpgApi
         }
 
         // internal AND protected
-        internal String InternalAskPassphrase(String userid, Boolean isnewpassphrase = false, Boolean issymmetric = false)
+        internal SecureString InternalAskPassphrase(String userid, Boolean isnewpassphrase = false, Boolean issymmetric = false)
         {
             AskPassphraseInfo info = new AskPassphraseInfo(userid, isnewpassphrase, issymmetric, issymmetric ? 1 : PassphraseMaxTries - _tries);
 
-            String result = null;
+            SecureString result = null;
 
             if (SynchronizationContext == null)
                 result = AskPassphrase(info);
@@ -401,6 +402,42 @@ namespace GpgApi
         {
             if (_process != null)
                 _process.StandardInput.WriteLine(str);
+        }
+
+        // internal AND protected
+        internal void WritePassword(SecureString password)
+        {
+            if (_process == null)
+                return;
+
+            if (!password.IsReadOnly())
+                throw new GpgApiException("The SecureString \"password\" must be readonly");
+            
+            using (SecureStringToCharArrayMarshaler m = new SecureStringToCharArrayMarshaler(password))
+            {
+                _process.StandardInput.Write(m.Value);
+                _process.StandardInput.WriteLine();
+            }
+        }
+
+        internal Boolean IsNullOrEmpty(SecureString str)
+        {
+            return str == null || str.Length == 0;
+        }
+
+        /// <summary>
+        /// This method is here just for conveniences.
+        /// You will lose all the benefit of a SecureString if you use this method.
+        /// </summary>
+        /// <param name="s">The string to convert.</param>
+        /// <returns>A SecureString that can be used in GpgApi.</returns>
+        public static SecureString GetSecureStringFromString(String s)
+        {
+            SecureString secureString = new SecureString();
+            for (Int32 i = 0; i < s.Length; ++i)
+                secureString.AppendChar(s[i]);
+            secureString.MakeReadOnly();
+            return secureString;
         }
 
         // ----------------------------------------------------------------------------------------

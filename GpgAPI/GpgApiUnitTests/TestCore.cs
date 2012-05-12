@@ -1,5 +1,6 @@
 ﻿using System;
 using GpgApi;
+using System.Security;
 
 namespace GpgApiUnitTests
 {
@@ -10,9 +11,9 @@ namespace GpgApiUnitTests
             get { return @"C:\Program Files (x86)\GNU\GnuPG\gpg.exe"; }
         }
 
-        public static String AskPassphrase(AskPassphraseInfo info)
+        public static SecureString AskPassphrase(AskPassphraseInfo info)
         {
-            return "a";
+            return GpgInterface.GetSecureStringFromString("a");
         }
     }
 }
