@@ -32,6 +32,7 @@ namespace GpgApi
     public sealed class GpgExportKey : GpgInterface
     {
         public KeyId KeyId { get; private set; }
+        public Boolean PrivateKey { get; private set; }
 
         public String ExportedKey
         {
@@ -42,13 +43,15 @@ namespace GpgApi
         /// Initializes a new instance of the <see cref="GpgApi.GpgExportKey"/> class.
         /// </summary>
         /// <param name="keyId"></param>
+        /// <param name="privateKey"></param>
         /// <exception cref="System.ArgumentNullException"/>
-        public GpgExportKey(KeyId keyId)
+        public GpgExportKey(KeyId keyId, Boolean privateKey)
         {
             if (keyId == null)
                 throw new ArgumentNullException("keyId");
 
             KeyId = keyId;
+            PrivateKey = privateKey;
         }
 
         private StringBuilder exported_key = new StringBuilder();
@@ -56,7 +59,8 @@ namespace GpgApi
         // internal AND protected
         internal override String Arguments()
         {
-            return "--armor --export " + KeyId;
+            String export = PrivateKey ? "--export-secret-keys " : "--export ";
+            return "--armor " + export + KeyId;
         }
 
         // internal AND protected
