@@ -23,7 +23,7 @@ using System;
 namespace GpgApi
 {
     /// <summary>
-    /// Specifies the algorithm to be used to encrypt datas.
+    /// Specifies the algorithm to be used to encrypt data.
     /// Those algorithms are symmetrics.
     /// </summary>
     /// <remarks>
@@ -88,7 +88,7 @@ namespace GpgApi
     }
 
     /// <summary>
-    /// Specifies the algorithm to be used to hash datas (when signing).
+    /// Specifies the algorithm to be used to hash data (when signing).
     /// </summary>
     public enum DigestAlgorithm
     {
@@ -134,7 +134,7 @@ namespace GpgApi
     }
 
     /// <summary>
-    /// Specifies the algorithm to be used to encrypt and/or sign datas.
+    /// Specifies the algorithm to be used to encrypt and/or sign data.
     /// Those algorithms are asymmetrics.
     /// </summary>
     public enum KeyAlgorithm
@@ -145,38 +145,38 @@ namespace GpgApi
         None,
 
         /// <summary>
-        /// Encrypt and sign datas using the RSA algorithm.
+        /// Encrypt and sign data using the RSA algorithm.
         /// </summary>
         RsaRsa,
 
         /// <summary>
-        /// Encrypt datas using the RSA algorithm.
+        /// Encrypt data using the RSA algorithm.
         /// </summary>
         RsaEncrypt,
 
         /// <summary>
-        /// Sign datas using the RSA algorithm.
+        /// Sign data using the RSA algorithm.
         /// </summary>
         RsaSign,
 
         /// <summary>
-        /// Sign datas using the DSA algorithm.
+        /// Sign data using the DSA algorithm.
         /// </summary>
         Dsa,
 
         /// <summary>
-        /// Encrypt datas using the ElGamal algorithm.
+        /// Encrypt data using the ElGamal algorithm.
         /// </summary>
         ELGamal,
 
         /// <summary>
-        /// Encrypt and sign datas using the DSA/ElGamal algorithm.
+        /// Encrypt and sign data using the DSA/ElGamal algorithm.
         /// </summary>
         DsaELGamal
     }
 
     /// <summary>
-    /// Specifies the compression algorithm to be used by GPG when compressing the datas.
+    /// Specifies the compression algorithm to be used by GPG when compressing the data.
     /// </summary>
     public enum CompressionAlgorithm
     {
